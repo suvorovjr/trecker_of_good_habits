@@ -15,7 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
         confirmation_url = reverse('users:confirm_email', kwargs={'token': confirmation_token})
         request = self.context.get('request')
         full_confirmation_url = request.build_absolute_uri(confirmation_url)
-        # send_confirm_link(user.email, full_confirmation_url)
+        send_confirm_link(user.email, full_confirmation_url)
         return user
 
     class Meta:
