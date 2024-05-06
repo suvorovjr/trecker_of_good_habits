@@ -6,6 +6,7 @@ from .serializers import UserSerializer
 from rest_framework.permissions import AllowAny
 from .models import User
 from .services import validate_token
+from .permissions import IsAccountOwner
 
 
 class UserCreateAPIView(generics.CreateAPIView):
@@ -25,8 +26,18 @@ class ConfirmEmailAPIView(APIView):
 class UserUpdateAPIView(generics.UpdateAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = [IsAccountOwner]
+
+    def update(self, request, *args, **kwargs):
+        user = self.get_object()
+        new_password = request.data.get('new_password')
+        if new_password:
+            user.set_password(new_password)
+            user.save()
+        return Response({'message': 'Учетная запись цспешно изменена'}, status=status.HTTP_200_OK)
 
 
 class UserDestroyAPIView(generics.DestroyAPIView):
     serializer_class = UserSerializer
     queryset = User.objects.all()
+    permission_classes = [IsAccountOwner]
