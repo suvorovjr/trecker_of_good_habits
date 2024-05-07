@@ -20,10 +20,10 @@ def get_confirmation_token(user):
     return token
 
 
-def send_confirm_link(recipient_list, confirm_link):
+def send_message(recipient_list, subject, message):
     send_mail(
-        subject='Подтвердите аккаунт',
-        message=f'Для подтверждения аккаунта перейдите по ссылке {confirm_link}',
+        subject=subject,
+        message=message,
         from_email=settings.EMAIL_HOST_USER,
         recipient_list=recipient_list.split()
     )

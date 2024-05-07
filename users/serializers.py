@@ -1,6 +1,6 @@
 from django.urls import reverse
 from rest_framework import serializers
-from .services import get_confirmation_token, send_confirm_link
+from .services import get_confirmation_token, send_message
 from .models import User
 
 
@@ -15,7 +15,9 @@ class UserSerializer(serializers.ModelSerializer):
         confirmation_url = reverse('users:confirm_email', kwargs={'token': confirmation_token})
         request = self.context.get('request')
         full_confirmation_url = request.build_absolute_uri(confirmation_url)
-        send_confirm_link(user.email, full_confirmation_url)
+        subject = 'Подтверждение почты'
+        message = f'Для подтверждения аккаунта перейдите по ссылке {full_confirmation_url}'
+        send_message(user.email, subject, message)
         return user
 
     class Meta:
