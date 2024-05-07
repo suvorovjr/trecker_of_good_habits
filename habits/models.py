@@ -30,7 +30,7 @@ class Habit(models.Model):
     is_pleasant = models.BooleanField(default=False, verbose_name='Приятная привычка')
 
     def __str__(self):
-        raise f'Я буду {self.action} в {self.habit_time} в {self.habit_place}'
+        return f'Я буду {self.action} в {self.habit_time} в {self.habit_place}'
 
     class Meta:
         verbose_name = 'Привычка'
