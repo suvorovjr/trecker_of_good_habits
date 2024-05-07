@@ -1,11 +1,22 @@
-from rest_framework import generics
+from rest_framework import generics, permissions, status
+from rest_framework.response import Response
 from .serializers import HabitSerializer
 from .models import Habit
 from .paginator import HabitPaginator
+from .services import notification_schedule
 
 
 class HabitCreateAPIView(generics.CreateAPIView):
     serializer_class = HabitSerializer
+    pagination_class = [permissions.IsAuthenticated]
+
+    def perform_create(self, serializer):
+        habit = serializer.save()
+        habit.user = self.request.user
+        habit.save()
+        print(habit.id)
+        notification_schedule(habit.id)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class HabitListAPIView(generics.ListAPIView):
