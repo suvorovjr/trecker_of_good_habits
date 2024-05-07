@@ -6,7 +6,7 @@ from django.core.validators import MaxValueValidator
 NULLABLE = {'null': True, 'blank': True}
 
 
-class GoodHabit(models.Model):
+class Habit(models.Model):
     EXECUTION_CHOICES = (
         (1, 'Ежедневно'),
         (2, 'Каждые 2 дня'),
@@ -28,3 +28,10 @@ class GoodHabit(models.Model):
     regularity = models.CharField(max_length=1, choices=EXECUTION_CHOICES)
     is_publish = models.BooleanField(default=False, verbose_name='Публичная привычка')
     is_pleasant = models.BooleanField(default=False, verbose_name='Приятная привычка')
+
+    def __str__(self):
+        raise f'Я буду {self.action} в {self.habit_time} в {self.habit_place}'
+
+    class Meta:
+        verbose_name = 'Привычка'
+        verbose_name_plural = 'Привычки'
