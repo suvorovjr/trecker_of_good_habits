@@ -8,7 +8,7 @@ from .services import notification_schedule
 
 class HabitCreateAPIView(generics.CreateAPIView):
     serializer_class = HabitSerializer
-    pagination_class = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def perform_create(self, serializer):
         habit = serializer.save()
