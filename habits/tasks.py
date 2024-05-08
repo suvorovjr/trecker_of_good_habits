@@ -4,7 +4,6 @@ from .services import send_notification
 
 def notification_of_action(habit_id):
     habit = Habit.objects.get(id=habit_id)
-    print('Задача запущена')
     message = str(habit)
     action = habit.action
     email = habit.user.email
