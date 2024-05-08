@@ -14,7 +14,6 @@ class HabitCreateAPIView(generics.CreateAPIView):
         habit = serializer.save()
         habit.user = self.request.user
         habit.save()
-        print(habit.id)
         notification_schedule(habit.id)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 

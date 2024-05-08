@@ -1,4 +1,3 @@
-from celery import shared_task
 from .models import Habit
 from .services import send_notification
 
